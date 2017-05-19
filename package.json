@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest"
   },
   "repository": "https://github.com/benmusch/chorebot",
   "author": "Ben Muschol",
   "license": "MIT",
   "dependencies": {
+    "babel-jest": "^20.0.3",
     "babel-register": "^6.24.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
@@ -18,5 +20,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "jest": {
+    "transform": {".*": "<rootDir>/node_modules/babel-jest"}
   }
 }
