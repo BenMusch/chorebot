@@ -1,8 +1,11 @@
 var express = require('express')
 var app = express()
 
+app.set('views', './views')
+app.set('view engine', 'pug')
+
 app.get('/', function(req, res) {
-  res.send('Welcome to Chorebot!')
+  res.render('index', { msg: 'Welcome to chorebot!' })
 })
 
 var server = app.listen(3000, function() {
