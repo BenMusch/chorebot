@@ -1,8 +1,12 @@
 var express = require('express')
 var app = express()
 
+var bodyParser = require('body-parser')
+
 app.set('views', './views')
 app.set('view engine', 'pug')
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
   res.render('index', { msg: 'Welcome to chorebot!' })
