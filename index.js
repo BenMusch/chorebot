@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
   res.render('index', { msg: 'Welcome to chorebot!' })
 })
 
-let server = app.listen(3000, () => {
+const port = process.env.PORT || 3000
+let server = app.listen(port, () => {
   console.log(`Server running at localhost:${server.address().port}`)
 })
