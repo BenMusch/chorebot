@@ -12,16 +12,20 @@
   "author": "Ben Muschol",
   "license": "MIT",
   "dependencies": {
-    "babel-jest": "^20.0.3",
     "babel-register": "^6.24.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "jest": "^20.0.3",
+    "jest-cli": "^20.0.3",
     "nodemon": "^1.11.0"
   },
   "jest": {
-    "transform": {".*": "<rootDir>/node_modules/babel-jest"}
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    }
   }
 }
