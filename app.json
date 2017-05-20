@@ -9,6 +9,9 @@
   "addons": [
     "mongolab": {
       "plan": "sandbox"
+    },
+    "papertrail": {
+      "plan": "choklad"
     }
   ],
   "buildpacks": [
