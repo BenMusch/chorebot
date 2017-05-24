@@ -6,7 +6,7 @@ describe('Notification', () => {
     days: ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'],
     message: 'Here is a message!',
     channels: ['office', 'general'],
-    users: [{name: 'benmusch'}]
+    users: [{ name: 'benmusch' }]
   }
   let notification;
 
@@ -60,44 +60,44 @@ describe('Notification', () => {
     })
 
     it('must have hours between 0 and 23', () => {
-      time = new Time({ hour: -1, minute: 30 })
+      notification.times = [{ hour: -1, minute: 30 }]
 
-      errors = time.validateSync()
-      expect(errors.errors['hour']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.hour']).toBeTruthy()
 
-      times = new Time({ hour: 24, minute: 30 })
+      notification.times = [{ hour: 24, minute: 30 }]
 
-      errors = time.validateSync()
-      expect(errors.errors['hour']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.hour']).toBeTruthy()
     })
 
     it('must have minutes between 0 and 59', () => {
-      time = new Time({ hour: 12, minute: -1 })
+      notification.times = [{ hour: 12, minute: -1 }]
 
-      errors = time.validateSync()
-      expect(errors.errors['minute']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.minute']).toBeTruthy()
 
-      time = new Time({ hour: 12, minute: 60 })
+      notification.times = [{ hour: 12, minute: 60 }]
 
-      errors = time.validateSync()
-      expect(errors.errors['minute']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.minute']).toBeTruthy()
     })
 
     it('must have hours and minutes', () => {
-      time = new Time({ hour: 12})
+      notification.times = [{ hour: 12}]
 
-      errors = time.validateSync()
-      expect(errors.errors['minute']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.minute']).toBeTruthy()
 
-      time = new Time({ minute: 30 })
+      notification.times = [{ minute: 30 }]
 
-      errors = time.validateSync()
-      expect(errors.errors['hour']).toBeTruthy()
+      errors = notification.validateSync()
+      expect(errors.errors['times.0.hour']).toBeTruthy()
     })
   })
 
   describe('channels', () => {
-    it('needs to be provided', () => {
+    it('needs to be provided', ()=> {
       notification.channels = []
 
       errors = notification.validateSync()
@@ -118,6 +118,30 @@ describe('Notification', () => {
 
       errors = notification.validateSync()
       expect(errors.errors['users']).toBeTruthy()
+    })
+
+    it('must have a name', () => {
+      notification.users = [{}]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+    })
+
+    it('cannot have whitespace in the name', () => {
+      notification.users = [{ name: '' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+
+      notification.users = [{ name: '   ' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+
+      notification.users = [{ name: 'with whitespace' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
     })
   })
 })
