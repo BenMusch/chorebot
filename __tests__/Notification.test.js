@@ -5,7 +5,8 @@ describe('Notification', () => {
     times: [{ hour: 12, minute: 30 }, { hour: 23, minute: 59 }, { hour: 0, minute: 0 }],
     days: ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'],
     message: 'Here is a message!',
-    channels: ['office', 'general']
+    channels: ['office', 'general'],
+    users: [{name: 'benmusch'}]
   }
   let notification;
 
@@ -59,44 +60,44 @@ describe('Notification', () => {
     })
 
     it('must have hours between 0 and 23', () => {
-      notification.times = [{ hour: -1, minute: 30 }]
+      time = new Time({ hour: -1, minute: 30 })
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.hour']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['hour']).toBeTruthy()
 
-      notification.times = [{ hour: 24, minute: 30 }]
+      times = new Time({ hour: 24, minute: 30 })
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.hour']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['hour']).toBeTruthy()
     })
 
     it('must have minutes between 0 and 59', () => {
-      notification.times = [{ hour: 12, minute: -1 }]
+      time = new Time({ hour: 12, minute: -1 })
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.minute']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['minute']).toBeTruthy()
 
-      notification.times = [{ hour: 12, minute: 60 }]
+      time = new Time({ hour: 12, minute: 60 })
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.minute']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['minute']).toBeTruthy()
     })
 
     it('must have hours and minutes', () => {
-      notification.times = [{ hour: 12}]
+      time = new Time({ hour: 12})
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.minute']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['minute']).toBeTruthy()
 
-      notification.times = [{ minute: 30 }]
+      time = new Time({ minute: 30 })
 
-      errors = notification.validateSync()
-      expect(errors.errors['times.0.hour']).toBeTruthy()
+      errors = time.validateSync()
+      expect(errors.errors['hour']).toBeTruthy()
     })
   })
 
   describe('channels', () => {
-    it('needs to be provided', ()=> {
+    it('needs to be provided', () => {
       notification.channels = []
 
       errors = notification.validateSync()
@@ -108,6 +109,15 @@ describe('Notification', () => {
 
       errors = notification.validateSync()
       expect(errors.errors['channels']).toBeTruthy()
+    })
+  })
+
+  describe('users', () => {
+    it('needs to be provided', () => {
+      notification.users = []
+
+      errors = notification.validateSync()
+      expect(errors.errors['users']).toBeTruthy()
     })
   })
 })
