@@ -5,7 +5,8 @@ describe('Notification', () => {
     times: [{ hour: 12, minute: 30 }, { hour: 23, minute: 59 }, { hour: 0, minute: 0 }],
     days: ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'],
     message: 'Here is a message!',
-    channels: ['office', 'general']
+    channels: ['office', 'general'],
+    users: [{ name: 'benmusch' }]
   }
   let notification;
 
@@ -108,6 +109,39 @@ describe('Notification', () => {
 
       errors = notification.validateSync()
       expect(errors.errors['channels']).toBeTruthy()
+    })
+  })
+
+  describe('users', () => {
+    it('needs to be provided', () => {
+      notification.users = []
+
+      errors = notification.validateSync()
+      expect(errors.errors['users']).toBeTruthy()
+    })
+
+    it('must have a name', () => {
+      notification.users = [{}]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+    })
+
+    it('cannot have whitespace in the name', () => {
+      notification.users = [{ name: '' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+
+      notification.users = [{ name: '   ' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
+
+      notification.users = [{ name: 'with whitespace' }]
+
+      errors = notification.validateSync()
+      expect(errors.errors['users.0.name']).toBeTruthy()
     })
   })
 })
