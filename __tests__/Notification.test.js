@@ -167,5 +167,31 @@ describe('Notification', () => {
         })
       })
     })
+
+    describe('rotateUsers', () => {
+      it('moves up all of the current users, and moves the first user to the end', () => {
+        notification.rotateUsers(() => {
+          expect(notification.users).toEqual([bmuschol, benm, benmusch])
+        })
+      })
+    })
+
+    describe('addUser', () => {
+      it('creates a new user with the given params', () => {
+        expect(notification.users[3]).toBeFalsy()
+
+        notification.addUser({ name: 'johnsmith' }, () => {
+          expect(notification.users[3].name).toEqual('johnsmith')
+        })
+      })
+    })
+
+    describe('removeUser', () => {
+      it('removes the given user', () => {
+        notification.removeUser(bmuschol, () => {
+          expect(notification.users).toEqual([benmusch, benm])
+        })
+      })
+    })
   })
 })
