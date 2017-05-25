@@ -4,7 +4,7 @@ let app = express()
 
 let bodyParser = require('body-parser')
 
-const User = require('./db').User
+const db = require(db)
 
 app.set('views', './views')
 app.set('view engine', 'pug')
@@ -12,9 +12,7 @@ app.set('view engine', 'pug')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-  const users = User.find({}, (err, users) => {
-    res.render('index', { msg: 'Welcome to chorebot!', users: users })
-  })
+  res.render('index', { msg: 'Welcome to chorebot!', users: [] })
 })
 
 const port = process.env.PORT || 3000
