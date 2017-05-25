@@ -12,6 +12,7 @@
   "author": "Ben Muschol",
   "license": "MIT",
   "dependencies": {
+    "agenda": "^0.9.1",
     "babel-register": "^6.24.1",
     "body-parser": "^1.17.2",
     "date-fns": "^1.28.5",

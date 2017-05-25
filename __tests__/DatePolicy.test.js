@@ -1,4 +1,4 @@
-const DatePolicy = require('../lib/DatePolicy')
+const DatePolicy = require('../lib/policies/DatePolicy')
 
 describe('DatePolicy', () => {
   it('Will return true if the given day is one of the days the policy is set to', () => {

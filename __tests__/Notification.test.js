@@ -1,4 +1,4 @@
-const Notification = require('../lib/Notification')
+const Notification = require('../lib/models/Notification')
 
 describe('Notification', () => {
   const baseData = {
