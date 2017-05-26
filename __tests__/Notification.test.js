@@ -6,7 +6,7 @@ describe('Notification', () => {
     days: ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'],
     message: 'Here is a message!',
     channels: ['office', 'general'],
-    users: [{ name: 'benmusch' }]
+    users: [{ name: 'benmusch' }, { name: 'bmuschol' }, { name: 'benm' }]
   }
   let notification;
 
@@ -142,6 +142,56 @@ describe('Notification', () => {
 
       errors = notification.validateSync()
       expect(errors.errors['users.0.name']).toBeTruthy()
+    })
+  })
+
+  describe('user operations', () => {
+    let benm;
+    let benmusch;
+    let bmuschol;
+
+    beforeEach(() => {
+      benm = notification.users[2]
+      benmusch = notification.users[0]
+      bmuschol = notification.users[1]
+    })
+
+    describe('currentUser', () => {
+      test('get returns the first user in users', () => {
+        expect(notification.currentUser).toEqual(benmusch)
+      })
+
+      test('set swaps the passed user\'s position with the first user', () => {
+        notification.setCurrentUser(benm, () => {
+          expect(notification.users).toEqual([benm, bmuschol, benmusch])
+        })
+      })
+    })
+
+    describe('rotateUsers', () => {
+      it('moves up all of the current users, and moves the first user to the end', () => {
+        notification.rotateUsers(() => {
+          expect(notification.users).toEqual([bmuschol, benm, benmusch])
+        })
+      })
+    })
+
+    describe('addUser', () => {
+      it('creates a new user with the given params', () => {
+        expect(notification.users[3]).toBeFalsy()
+
+        notification.addUser({ name: 'johnsmith' }, () => {
+          expect(notification.users[3].name).toEqual('johnsmith')
+        })
+      })
+    })
+
+    describe('removeUser', () => {
+      it('removes the given user', () => {
+        notification.removeUser(bmuschol, () => {
+          expect(notification.users).toEqual([benmusch, benm])
+        })
+      })
     })
   })
 })
