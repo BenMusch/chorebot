@@ -4,7 +4,7 @@ let app = express()
 
 let bodyParser = require('body-parser')
 
-const db = require('db')
+const db = require('./db')
 
 app.set('views', './views')
 app.set('view engine', 'pug')
