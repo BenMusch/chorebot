@@ -1,9 +1,7 @@
-doctype html
-html(lang="en")
-  head
-    title Welcome!
-  body
-    h1 Chorebot
-    span #{msg}
-    br
-    p Users: #{JSON.stringify(users)}
+extends layout
+
+block content
+  h1 Chorebot
+  span #{msg}
+  br
+  p Users: #{JSON.stringify(users)}
