@@ -1,4 +1,4 @@
-const uri = require('./constants').databaseUri
+const uri = require('../constants').databaseUri
 
 const mongoose = require('mongoose')
 mongoose.connect(uri)
